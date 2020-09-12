@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c18fb123-ac04-49fd-827e-6aa594d3b560" name="Default Changelist" comment="" />
+    <list default="true" id="c18fb123-ac04-49fd-827e-6aa594d3b560" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,6 +23,9 @@
         <option value="Kotlin Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -76,6 +81,7 @@
       <workItem from="1598797776925" duration="2168000" />
       <workItem from="1599360317925" duration="4905000" />
       <workItem from="1599875621891" duration="165000" />
+      <workItem from="1599876236794" duration="186000" />
     </task>
     <servers />
   </component>
