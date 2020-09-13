@@ -1,9 +1,18 @@
 class TreeNode(var `val`: Int) {
     var left: TreeNode? = null
     var right: TreeNode? = null
+
+    // TODO: 2020/09/13 木構造っぽく出力するには工夫が必要そう
+    // Factoryの逆をやってlistを生成するのがコスパ良さそう
+    override fun toString(): String {
+        return `val`.toString() +
+                (if (left != null) ", " + left.toString() else "") +
+                (if (right != null) ", " + right.toString() else "")
+    }
 }
 
 class TreeNodeFactory {
+
     companion object {
         fun new(inputArray: List<String>): TreeNode? {
 
