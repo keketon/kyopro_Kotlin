@@ -5,6 +5,7 @@ class TreeNode(var `val`: Int) {
 
     // TODO: 2020/09/13 木構造っぽく出力するには工夫が必要そう
     // Factoryの逆をやってlistを生成するのがコスパ良さそう
+    // null も表示した方が良い
     override fun toString(): String {
         return `val`.toString() +
                 (if (left != null) ", " + left.toString() else "") +
@@ -19,6 +20,15 @@ class TreeNode(var `val`: Int) {
 
             return isSameTree(p.left, q.left) && isSameTree(p.right, q.right)
 
+        }
+
+        fun toPreorderList(root: TreeNode?): List<Int> {
+            if (root == null) return listOf()
+            val preorderList = mutableListOf<Int>()
+            preorderList.addAll(toPreorderList(root.left))
+            preorderList.add(root.`val`)
+            preorderList.addAll(toPreorderList(root.right))
+            return preorderList
         }
     }
 }
