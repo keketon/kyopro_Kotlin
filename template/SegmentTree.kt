@@ -59,7 +59,7 @@ class SegmentTree(
      * @param right tree[index]が表す区間の右端（開区間）
      * @return 区間の評価値
      */
-    fun query_sub(begin: Int, end: Int, index: Int, left: Int, right: Int): Long {
+    private fun query_sub(begin: Int, end: Int, index: Int, left: Int, right: Int): Long {
         return if (right <= begin || end <= left) { // 範囲外なら考えない
             0L
         } else if (begin <= left && right <= end) { // 範囲内なので自身の値を返す

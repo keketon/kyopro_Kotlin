@@ -69,7 +69,7 @@ class LazySegmentTree(
      * @param right tree[index]が表す区間の右端（開区間）
      * @return 区間の評価値
      */
-    fun query_sub(begin: Int, end: Int, index: Int, left: Int, right: Int): Long {
+    private fun query_sub(begin: Int, end: Int, index: Int, left: Int, right: Int): Long {
         eval(index)
         return if (right <= begin || end <= left) { // 範囲外なら考えない
             0L
