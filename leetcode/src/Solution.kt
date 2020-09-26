@@ -1,5 +1,5 @@
 class Solution {
-    fun maxProfit(prices: IntArray): Int {
-
+    fun xxx(x : Int): Int {
+        return x
     }
 }
