@@ -1,0 +1,43 @@
+class WeightedGraphWithAdjacencyList(val n: Int) {
+    val adjacencyList = Array(n) { mutableListOf<Edge>() }
+    val edges = mutableListOf<Edge>()
+
+    fun addEdge(from: Int, to: Int, cost: Long, isDirected: Boolean = false) {
+        adjacencyList[from].add(Edge(from = from, to = to, cost = cost))
+        if (!isDirected) adjacencyList[to].add(Edge(from = to, to = from, cost = cost))
+
+        // FIXME cannot find usage
+        edges.add(Edge(from = from, to = to, cost = cost))
+    }
+
+    fun dijkstra(start: Int = 0): LongArray {
+        val inf = 1E18.toLong()
+        val minCost = LongArray(n) { inf }
+        val pq : Queue<Pair<Long, Int>> = PriorityQueue(compareBy<Pair<Long, Int>> { it.first })
+
+        minCost[start] = 0
+        pq.add(0L to start)
+
+        while (pq.isNotEmpty()) {
+            val pair = pq.poll()
+            val cost = pair.first
+            val now = pair.second
+
+            if (minCost[now] < cost) continue
+
+            adjacencyList[now].forEach { edge ->
+                if (minCost[edge.to] > cost + edge.cost) {
+                    minCost[edge.to] = cost + edge.cost
+                    pq.add(minCost[edge.to] to edge.to)
+                }
+            }
+        }
+        return minCost
+    }
+}
+
+data class Edge(
+    val from: Int,
+    val to: Int,
+    val cost: Long
+)
