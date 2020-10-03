@@ -1,0 +1,107 @@
+class WeightedGraphWithAdjacencyList(val n: Int) {
+    val adjacencyList = Array(n) { mutableListOf<Edge>() }
+    val edges = mutableListOf<Edge>()
+
+    fun addEdge(from: Int, to: Int, cost: Long, isDirected: Boolean = false) {
+        adjacencyList[from].add(Edge(from = from, to = to, cost = cost))
+        if (!isDirected) adjacencyList[to].add(Edge(from = to, to = from, cost = cost))
+
+        edges.add(Edge(from = from, to = to, cost = cost))
+        if (!isDirected) edges.add(Edge(from = to, to = from, cost = cost))
+    }
+
+    /**
+     * Calculate minimum cost path with Bellman-Ford's algorithm.
+     * Return array consist of -INFs if negative loop exists.
+     *
+     * @param start start point
+     * @return minimum cost from start point to each vertex
+     */
+    fun bellmanFord(start: Int = 0): LongArray {
+        val minCost = LongArray(n) { INF }
+
+        minCost[start] = 0
+
+        var hasNegativeLoop = false
+        for (i in 0 until n) {
+            var updated = false
+
+            edges.filter { edge ->
+                minCost[edge.from] != INF && minCost[edge.to] > minCost[edge.from] + edge.cost
+            }.forEach { edge ->
+                minCost[edge.to] = minCost[edge.from] + edge.cost
+                updated = true
+            }
+
+            if (!updated) break
+            hasNegativeLoop = i == n - 1
+        }
+
+        return if (hasNegativeLoop) LongArray(n) { -INF } else minCost
+    }
+
+    /**
+     * Calculate minimum cost path with Dijkstra's algorithm
+     *
+     * @param start start point
+     * @return minimum cost from start point to each vertex
+     */
+    fun dijkstra(start: Int = 0): LongArray {
+        val minCost = LongArray(n) { INF }
+        val pq: Queue<Pair<Long, Int>> = PriorityQueue(compareBy<Pair<Long, Int>> { it.first })
+
+        minCost[start] = 0
+        pq.add(0L to start)
+
+        while (pq.isNotEmpty()) {
+            val pair = pq.poll()
+            val cost = pair.first
+            val now = pair.second
+
+            if (minCost[now] < cost) continue
+
+            adjacencyList[now].forEach { edge ->
+                if (minCost[edge.to] > cost + edge.cost) {
+                    minCost[edge.to] = cost + edge.cost
+                    pq.add(minCost[edge.to] to edge.to)
+                }
+            }
+        }
+        return minCost
+    }
+
+    fun prim(): Long {
+        var wholeMinWeight = 0L
+        val used = BooleanArray(n)
+        val pq: Queue<Pair<Long, Int>> = PriorityQueue(compareBy<Pair<Long, Int>> { it.first })
+
+        pq.add(0L to 0)
+
+        while (pq.isNotEmpty()) {
+            val pair = pq.poll()
+            val cost = pair.first
+            val now = pair.second
+
+            if (used[now]) continue
+
+            used[now] = true
+            wholeMinWeight += cost
+
+            adjacencyList[now].filter { edge -> !used[edge.to] }.forEach { edge ->
+                pq.add(edge.cost to edge.to)
+            }
+        }
+
+        return wholeMinWeight
+    }
+
+    companion object {
+        const val INF = 1E18.toLong()
+    }
+}
+
+data class Edge(
+    val from: Int,
+    val to: Int,
+    val cost: Long
+)
