@@ -4,8 +4,11 @@ class UnionFind(n: Int) {
 
     fun find(i: Int): Int {
         val p = parent[i]
-        // FIXME: 2020/09/19 ↓で親に直接結合するときランクの管理がガバる
-        return if (i == p) i else find(p).also { parent[i] = it }
+        return if (i == p) i
+        else find(p).also {
+            parent[i] = it
+            rank[i] = 2
+        }
     }
 
     fun union(i: Int, j: Int) {
